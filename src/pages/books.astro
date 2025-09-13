@@ -1,0 +1,24 @@
+---
+import { getCollection } from 'astro:content';
+const books = (await getCollection('books'))
+  .sort((a,b) => (a.data.series ?? '').localeCompare(b.data.series ?? '') || (a.data.numberInSeries ?? 0) - (b.data.numberInSeries ?? 0));
+---
+<html lang="en">
+  <head><meta charset="utf-8" /><title>Books</title></head>
+  <body>
+    <h1>Books</h1>
+    <section style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:1.25rem;">
+      {books.map(({ data, slug }) => (
+        <article>
+          {data.cover && <img src={data.cover} alt={data.title} width="300" />}
+          <h3>{data.title}</h3>
+          {data.series && <p><em>{data.series}{data.numberInSeries ? ` #${data.numberInSeries}` : ''}</em></p>}
+          <p>{data.blurb}</p>
+          {data.buyLinks && data.buyLinks.length > 0 && (
+            <p>{data.buyLinks.map(l => <a href={l.url} rel="noopener">Buy {l.label}</a>)}</p>
+          )}
+        </article>
+      ))}
+    </section>
+  </body>
+</html>

@@ -6,7 +6,9 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "lint:md": "markdownlint '**/*.md' -i node_modules",
+    "test:lighthouse": "lhci autorun",
+    "check:links": "npx lychee --config .lychee.toml ."
   },
   "dependencies": {
     "@astrojs/mdx": "^4.3.5",
@@ -14,5 +16,9 @@
     "@astrojs/sitemap": "^3.5.1",
     "astro": "^5.13.7",
     "sharp": "^0.34.3"
+  },
+  "devDependencies": {
+    "@astrojs/netlify": "^6.5.10",
+    "@astrojs/vercel": "^8.2.7"
   }
 }
